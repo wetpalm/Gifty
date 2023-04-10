@@ -1,0 +1,64 @@
+{% extends 'sitebase.html' %}
+
+{% block header %}
+Redeem Card
+{% endblock  %}
+
+{% block content %}
+<div class="row d-flex justify-content-center">
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-header text-white {% if test.status == 0 %} bg-success {% else %} bg-danger {% endif %}"><b>Validity</b></div>
+            <div class="card-body">
+                {% if validity == 0 %}
+                    <h6 class="text-danger text-center fw-bold">{{cardno}} is Invalid</h6>
+                {% endif %}
+
+                {% if validity == 1 %}
+                    {% if test.status == 1 %}
+                        <p class="text-danger text-center fw-bold">
+                            {{cardno}} <br> is already cashed!
+                        </p>
+                        <h6 class="text-warning text-center fw-bold">Already cashed on: {{test.updated_at}}</h6>
+                        <p class="text-center">
+                            <small><i><b>Sponsored by {{test.client}}</b></i></small>
+                        </p>
+                    {% elif test.status == 2 %}
+                        <p class="text-danger text-center fw-bold">
+                            {{cardno}} <br> is Blocked!
+                        </p>
+                        <h6 class="text-warning text-center fw-bold">Card blocked on: {{test.updated_at}}</h6>
+                    {% elif test.status == 0 %}
+                    <p class="text-info text-center fw-bold">
+                        {{cardno}} <br> is valid!
+                    </p> 
+                    <h5 class="text-success text-center fw-bold mb-0 mt-0">Payment Authorized</h5>
+                    <p class="text-center">
+                        <small><i><b>Sponsored by {{test.client}}</b></i></small>
+                    </p>
+                    <!-- <div class="card-body"> -->
+                        <form action="" method="post">
+                         {% csrf_token %}
+                         <div class="form-group">
+                             <label for=""><b><small>AgentID</small></b></label>
+                             <input type="text" class="form-control" name="txtid" required>
+                         </div>
+                         <div class="form-group">
+                             <label for=""><b><small>Passcode</small></b></label>
+                             <input type="password" class="form-control" name="txtcode" required>
+                             <input type="hidden" name="txtcard" value="{{cardno}}">
+                         </div>
+                         <button type="submit" class="btn btn-sm btn-success form-control" style="margin-top: 5px;">
+                            <span class="spinner-grow spinner-grow-sm" role="alert" aria-hidden="true"></span>
+                            <b>Make Payment</b>
+                            <span class="spinner-grow spinner-grow-sm" role="alert" aria-hidden="true"></span>
+                        </button>
+                        </form>
+                     <!-- </div> -->
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock  %}

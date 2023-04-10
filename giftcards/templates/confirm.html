@@ -1,0 +1,59 @@
+{% extends 'sitebase.html' %}
+{% load static %}
+{% block header %}Confirm Gift Card{% endblock  %}
+
+{% block content %}
+<div class="container-fluid">
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="form-group text-center">
+            <label for=""><b>Card Number</b></label>
+            <div class="d-flex justify-content-center">
+                <div class="col-md-6">
+                    <input type="text" class="form-control fw-bold text-center" name="txtcard">
+                    <button type="submit" class="btn btn-sm btn-primary" style="margin:10px"><b>Validate Card</b></button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <br><br><br>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card" style="margin:5px">
+                <div class="card-body text-center" style="background-color:white">
+                    <div class=" card-title text-center text-dark"><b>Gift Card (Basic)</b></div>
+    
+                    <img src="{% static 'img/card1.jpg' %}" alt="" height="100px" width="auto" style="margin-bottom:20px">
+                    <p class="card-text small fw-bold text-danger">
+                        Costs N6,000. with redeem value of 5,000
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card" style="margin:5px">
+                <div class="card-body text-center" style="background-color:white">
+                    <div class=" card-title text-center text-dark"><b>Gift Card (Knight)</b></div>
+                    <img src="{% static 'img/card2.jpeg' %}" alt="" height="100px" width="auto" style="margin-bottom:20px">
+                    <p class="card-text small fw-bold text-danger">
+                        Costs N11,000. with redeem value of 10,000
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card" style="margin:5px">
+                <div class="card-body text-center" style="background-color:white">
+                    <div class=" card-title text-center text-dark"><b>Gift Card (King)</b></div>
+                    <img src="{% static 'img/card3.jpg' %}" alt="" height="100px" width="auto" style="margin-bottom:20px">
+                    <p class="card-text small fw-bold text-danger">
+                        Costs N21,500. with redeem value of 20,000
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+{% endblock  %}

@@ -1,0 +1,96 @@
+{% extends 'sitebase.html' %}
+{% load humanize %}
+
+{% block header %}
+{{client.name}}
+<a href="#" class="btn btn-sm btn-success float-end"
+                 style="margin-bottom: 10px;" data-bs-toggle="modal" data-bs-target="#cardy"><b>Generate Cards</b></a>
+{% endblock %}
+
+{% block content %}
+<div class="row container d-flex justify-content-center">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-success text-white"><b>Total Cards</b></div>
+        </div>
+        <div class="card-body" style="background-color: bisque; min-height: 100px;">
+            <p class="fw-bold text-center" style="font-size: 8vh;">
+                {{tot_card|intcomma}}
+            </p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-success text-white"><b>Redeemed Cards</b></div>
+        </div>
+        <div class="card-body" style="background-color: bisque; min-height: 100px;">
+            <p class="fw-bold text-center" style="font-size: 8vh;">
+                {{redeemed|intcomma}}
+            </p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header bg-success text-white"><b>Unredeemed Cards</b></div>
+        </div>
+        <div class="card-body" style="background-color: bisque; min-height: 100px;">
+            <p class="fw-bold text-center" style="font-size: 8vh;">
+                {{free_cards|intcomma}}
+            </p>
+        </div>
+    </div>
+    
+</div>
+<hr>
+<div class="container" style="margin-bottom: 15px;">
+    <h4 class="text-info" style="margin-bottom: 7px;"><u><b>Cards By Batch Numbers</b></u></h4>
+    {% for bat in batches %}
+    <span class="btn-group">
+        <a href="{% url 'batch-details' bat.id %}" class="btn btn-sm btn-primary"><b>{{bat.batchno}}</b></a>
+        <!-- <a href="#" class="btn btn-sm btn-danger"><b>x</b></a> -->
+    </span>
+        
+    {% empty %}
+        <b>No card created yet</b>
+    {% endfor %}
+</div>
+<br>
+
+
+<!-- ============== modals =================== -->
+<div class="modal fade" id="cardy" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Generate Cards ({{client.name}})</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="modal-body">
+                <p class="text-danger text-left fw-bold">
+                    <small>Note: Each batch of cards contains 500 units of card</small>
+                </p>
+                <div class="form-group">
+                    <label for=""><b>No of Batches</b></label>
+                    <select name="selbatches" class="form-select" style="margin-bottom: 5px;" required>
+                        <option value="">select one</option>
+                        <option value="1">1 Batch</option>
+                        <option value="2">2 Batches</option>
+                        <option value="5">5 Batches</option>
+                        <option value="10">10 Batches</option>
+                        <option value="15">15 Batches</option>
+                        <option value="20">20 Batches</option>
+                    </select>
+                </div>
+                
+                <!-- {{form.as_p}} -->
+                <button type="submit" class="btn btn-sm btn-success">Create Cards</button>
+            </div>
+        </form>
+      </div>
+    </div>
+</div>
+
+
+{% endblock  %}

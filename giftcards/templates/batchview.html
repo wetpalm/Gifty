@@ -1,0 +1,61 @@
+{% extends 'sitebase.html' %}
+
+{% block header %}
+{{target.client}}
+<span class="float-end"><span class="text-danger">Batch No:</span> {{target.batchno}}</span>
+{% endblock  %}
+{% block content %}
+<div class="container">
+    <div class="row" style="margin-bottom: 15px;">
+        <div class="col-md-3">
+            <span class="btn btn-sm btn-info"><b>Free Cards: {{stat_free}}</b></span>
+        </div>
+        <div class="col-md-3">
+            <span class="btn btn-sm btn-success"><b>Redeemed Cards: {{stat_red}}</b></span>
+        </div>
+        <div class="col-md-3">
+            <span class="btn btn-sm btn-warning"><b>Blocked Cards: {{stat_blocked}}</b></span>
+        </div>
+        <div class="col-md-3 btn-group">
+            <a href="{% url 'printer-viewb' target.id %}" target="_blank" class="btn btn-sm btn-primary float-end"><b>Print Templates</b></a>
+            <a href="{% url 'block-batch' target.id %}" class="btn btn-sm btn-danger float-end"><b>Block Batch</b></a>
+        </div>
+    </div>
+    <table class="table table-condensed table-sm table-responsive table-striped table-bordered">
+        <tr>
+            <td><b>SN</b></td>
+            <td class="text-center"><b>Card Number</b></td>
+            <td class="text-center"><b>Status</b></td>
+            <td class="text-center"><b>Redeem Date</b></td>
+            <td class="text-center"><b>Action</b></td>
+        </tr>
+        {% for cd in cards %}
+        <tr>
+            <td>{{forloop.counter}}.</td>
+            <td>{{cd.cardno}}</td>
+            <td class="text-center">
+                {% if cd.status == 1 %}
+                Redeemed
+                {% elif cd.status == 2 %}
+                Blocked
+                {% else %}
+                Not Redeemed
+                {% endif %}
+            </td>
+            <td class="text-center">
+                {% if cd.status == 1 %}
+                {{cd.updated_at}}
+                {% else %}
+                N/A
+                {% endif %}
+            </td>
+            <td class="btn-group" style="text-align: center;">
+                <a href="{% url 'printer-viewa' cd.id %}" class="btn btn-sm btn-info badge">Print</a>
+                <a class="btn btn-sm btn-danger badge">Block</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'sitebase.html' %}
+
+{% block header %}
+Contact Us
+{% endblock  %}
+
+{% block content %}
+<div class="container">
+<div class="row">
+    <div class="col-md-6">
+        <h4><b>Address</b></h4>
+        At-Tayiiba Gifts&reg; <br>
+        No 14, Jide Akinsawe Street <br>
+        Off Olomololoko Way, <br>
+        New Oworo, <br>
+        Lagos <br>
+
+        <br>
+        <b>Email:</b> support@attayibbagifts.com <br>
+        <b>Phone:</b> +234 805 3209 225
+    </div>
+    <div class="col-md-6">
+        <form action="">
+            <div class="form-group">
+                <label for=""><b>Email Address</b></label>
+                <input type="email" class="form-control" name="txtemail" placeholder="Visitor's email" required>
+            </div>
+            <div class="form-group" style="margin-top: 8px;">
+                <label for=""><b>Message</b></label>
+                <textarea rows="7" class="form-control" name="txtmessage" required> </textarea>
+            </div>
+            <button type="submit" class="btn btn-sm btn-primary" style="margin-top: 8px;"><b>Send Message</b></button>
+        </form>
+    </div>
+</div>
+</div>
+
+{% endblock  %}

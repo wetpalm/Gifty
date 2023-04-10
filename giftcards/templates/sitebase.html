@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.toast.css' %}">
+    <title>Giftcards &reg;</title>
+</head>
+<body class="bg-secondary">
+    {% if messages %}
+    {% for msg in messages %}
+        <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+        <script src="{% static 'js/jquery.toast.js' %}"></script>
+        <script>
+            var myToast = $.toast({
+                heading: '{{tHeading}}',
+                text: '{{ msg }}',
+                icon: '{{tTag}}',
+                loader: true,
+                loaderBg: '#9EC600', 
+                position: 'top-right'
+            })
+        </script>
+    {% endfor %}
+{% endif %}
+<div class="container">
+    <nav class="navbar navbar-expand-lg bg-primary" style="margin-top:5px;">
+        <div class="container-fluid">
+        <a class="navbar-brand fw-bold text-white" href="#">
+            <img src="{% static 'img/card3.jpg' %}" alt="Bootstrap" width="30" height="24">
+            At-Tayyibah Gift Cards&reg;
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'roothome' %}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'partners' %}">Partners</a>
+            </li>
+            
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Services
+                </a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'confirm-card' %}">Confirm Gift Card</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'contactus' %}">Contact Us</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Management
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Users/Agents</a></li>
+                    <li><a class="dropdown-item" href="{% url 'manage-clients' %}">Clients</a></li>
+                    <!-- <li><a class="dropdown-item" href="#">Manage Cards</a></li> -->
+                    <li><a class="dropdown-item" href="{% url 'manage-partners' %}">Manage Partners</a></li>
+                    <!-- <li><a class="dropdown-item" href="#">Reports</a></li> -->
+                </ul>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                {% if user.is_authenticated %}
+                    <a class="nav-link" href="{% url 'logoutuser' %}">Logout</a>
+                {% else %}
+                    <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#login">Login</a>
+                {% endif %}
+            </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+    <div class="bg-light">
+        <div class="container h4 text-primary fw-bold">
+            <hr>
+            {% block header %} {% endblock %}
+            <hr>
+        </div>
+        <div style="height: 420px; overflow-y: auto;">
+        {% block content %}
+        
+        {% endblock %}
+        </div>
+        
+        <!-- <div class="bg-white" style="background-color:white">
+            <span class="float-end">
+                <i>Copyright At-Tayyibah 2022</i>
+            </span>
+        </div> -->
+    </div>
+    
+
+</div>
+
+<div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{% url 'user-login' %}" method="post">
+            {% csrf_token %}
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for=""><b>Username:</b></label>
+                    <input type="text" class="form-control" name="txtusername">
+                </div>
+                <div class="form-group">
+                    <label for=""><b>Password:</b></label>
+                    <input type="password" class="form-control" name="txtpassword">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-sm btn-success">Login</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+</div>
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'js/jquery.toast.js' %}"></script>
+</body>
+</html>

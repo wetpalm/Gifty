@@ -1,0 +1,58 @@
+{% extends 'sitebase.html' %}
+
+{% block header %}
+Manage Partners
+<a href="#" class="btn btn-sm btn-info float-end" data-bs-toggle="modal" data-bs-target="#addy">Add Partner</a>
+{% endblock  %}
+{% block content %}
+
+<div class="modal fade" id="addy" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Partner</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="modal-body">
+                <div>
+                    {{form.as_p}}
+                    <button type="submit" class="btn btn-sm btn-success">Create</button>
+                    <button type="button" class="btn btn-sm btn-danger">Cancel</button>
+                </div>
+                
+            </div>
+        </form>
+      </div>
+    </div>
+</div>
+<div class="container-fluid">
+<table class="table table-condensed table-sm table-striped">
+<tr>
+    <td><b>SN</b></td>
+    <td><b>Partner</b></td>
+    <td><b>Business Type</b></td>
+    <td><b>Address</b></td>
+    <td><b>State</b></td>
+    <td><b>Del</b></td>
+</tr>
+{% for pt in partners %}
+<tr>
+    <td>{{forloop.counter}}</td>
+    <td>{{pt.name}}</td>
+    <td>{{pt.category}}</td>
+    <td>{{pt.address}}</td>
+    <td>{{pt.lstate}}</td>
+    <td>
+        <a href="#" class="btn btn-sm btn-danger">Del</a>
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="6"><b>No partner created</b></td>
+</tr>
+{% endfor %}
+</table>
+</div>
+{% endblock  %}
